@@ -27,17 +27,17 @@ fi
 # copy & patch .env files from templates
 mkdir -p ./agent
 cp ../../../packages/agent/.env.example ./agent/.env.local
-sed -i "s|^CONF_PATH=.*|CONF_PATH=\"/opt/oid4vc-demo/packages/agent/conf/${ecosystem_name}\"|" ./agent/.env.local
-sed -i "s|^OID4VP_WEBAPP_BASE_URI=.*|OID4VP_WEBAPP_BASE_URI=${agent_host_address}|" ./agent/.env.local
-sed -i "s|^OID4VP_AGENT_BASE_URI=.*|OID4VP_AGENT_BASE_URI=${agent_host_address}|" ./agent/.env.local
+sed -i '' "s|^CONF_PATH=.*|CONF_PATH=\"/opt/oid4vc-demo/packages/agent/conf/${ecosystem_name}\"|" ./agent/.env.local
+sed -i '' "s|^OID4VP_WEBAPP_BASE_URI=.*|OID4VP_WEBAPP_BASE_URI=${agent_host_address}|" ./agent/.env.local
+sed -i '' "s|^OID4VP_AGENT_BASE_URI=.*|OID4VP_AGENT_BASE_URI=${agent_host_address}|" ./agent/.env.local
 
 mkdir -p ./oid4vci-demo-frontend/conf
 cp ../../../packages/oid4vci-demo-frontend/.env.example ./oid4vci-demo-frontend/.env.local
-sed -i "s|^REACT_APP_DEFAULT_ECOSYSTEM=.*|REACT_APP_DEFAULT_ECOSYSTEM=$ecosystem_name|" ./oid4vci-demo-frontend/.env.local
+sed -i '' "s|^REACT_APP_DEFAULT_ECOSYSTEM=.*|REACT_APP_DEFAULT_ECOSYSTEM=$ecosystem_name|" ./oid4vci-demo-frontend/.env.local
 
 mkdir -p ./oid4vp-demo-frontend
 cp ../../../packages/oid4vp-demo-frontend/.env.example ./oid4vp-demo-frontend/.env.local
-sed -i "s|^REACT_APP_BACKEND_BASE_URI=.*|REACT_APP_BACKEND_BASE_URI=${agent_host_address}|" ./oid4vp-demo-frontend/.env.local
+sed -i '' "s|^REACT_APP_BACKEND_BASE_URI=.*|REACT_APP_BACKEND_BASE_URI=${agent_host_address}|" ./oid4vp-demo-frontend/.env.local
 
 # change the urls in vci frontend configs
 cp "../../../packages/oid4vci-demo-frontend/src/configs/${ecosystem_name}.json" ./oid4vci-demo-frontend/conf
