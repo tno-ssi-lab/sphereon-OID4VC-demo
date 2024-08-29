@@ -13,18 +13,19 @@ services:
     volumes:
       - "./agent/conf:/opt/oid4vc-demo/packages/agent/conf:ro"
       - "./agent/.env.local:/opt/oid4vc-demo/packages/agent/.env.local:ro"
-    # ports:
+    ports:
+      - "5000"
     #   - "5000:5000"
     networks:
       - proxy
     labels:
       traefik.enable: "true"
-      traefik.http.routers.ssi-frontend-insecure.rule: Host(`agent.sphereon.ssi-lab.nl`)
-      traefik.http.routers.ssi-frontend-insecure.middlewares: redirectToHttps@file,securityHeaders@file
-      traefik.http.routers.ssi-frontend.tls.certresolver: letsencrypt
-      traefik.http.routers.ssi-frontend.tls.options: safeTLSOptions@file
-      traefik.http.routers.ssi-frontend.middlewares: securityHeaders@file
-      traefik.http.routers.ssi-frontend.rule: Host(`agent.sphereon.ssi-lab.nl`)
+      traefik.http.routers.sphereon-agent-insecure.rule: Host(`agent.sphereon.ssi-lab.nl`)
+      traefik.http.routers.sphereon-agent-insecure.middlewares: redirectToHttps@file,securityHeaders@file
+      traefik.http.routers.sphereon-agent.tls.certresolver: letsencrypt
+      traefik.http.routers.sphereon-agent.tls.options: safeTLSOptions@file
+      traefik.http.routers.sphereon-agent.middlewares: securityHeaders@file
+      traefik.http.routers.sphereon-agent.rule: Host(`agent.sphereon.ssi-lab.nl`)
 
   oid4vci-demo-frontend:
     container_name: oid4vci-demo-frontend
@@ -41,19 +42,20 @@ services:
     volumes:
       - "./oid4vci-demo-frontend/conf:/opt/oid4vc-demo/packages/oid4vci-demo-frontend/src/configs:ro"
       - "./oid4vci-demo-frontend/.env.local:/opt/oid4vc-demo/packages/oid4vci-demo-frontend/.env.local:ro"
-    # ports:
+    ports:
+      - "5001"
     #   - "5001:5001"
     restart: unless-stopped
     networks:
       - proxy
     labels:
       traefik.enable: "true"
-      traefik.http.routers.ssi-frontend-insecure.rule: Host(`vci.sphereon.ssi-lab.nl`)
-      traefik.http.routers.ssi-frontend-insecure.middlewares: redirectToHttps@file,securityHeaders@file
-      traefik.http.routers.ssi-frontend.tls.certresolver: letsencrypt
-      traefik.http.routers.ssi-frontend.tls.options: safeTLSOptions@file
-      traefik.http.routers.ssi-frontend.middlewares: securityHeaders@file
-      traefik.http.routers.ssi-frontend.rule: Host(`vci.sphereon.ssi-lab.nl`)
+      traefik.http.routers.sphereon-frontend-vci-insecure.rule: Host(`vci.sphereon.ssi-lab.nl`)
+      traefik.http.routers.sphereon-frontend-vci-insecure.middlewares: redirectToHttps@file,securityHeaders@file
+      traefik.http.routers.sphereon-frontend-vci.tls.certresolver: letsencrypt
+      traefik.http.routers.sphereon-frontend-vci.tls.options: safeTLSOptions@file
+      traefik.http.routers.sphereon-frontend-vci.middlewares: securityHeaders@file
+      traefik.http.routers.sphereon-frontend-vci.rule: Host(`vci.sphereon.ssi-lab.nl`)
 
   oid4vp-demo-frontend:
     container_name: oid4vp-demo-frontend
@@ -71,16 +73,21 @@ services:
         NODE_SCRIPT: "start:prod"
     volumes:
       - "./oid4vp-demo-frontend/.env.local:/opt/oid4vc-demo/packages/oid4vp-demo-frontend/.env.local:ro"
-    # ports:
+    ports:
+      - "5002"
     #   - "5002:5002"
     restart: unless-stopped
     networks:
       - proxy
     labels:
       traefik.enable: "true"
-      traefik.http.routers.ssi-frontend-insecure.rule: Host(`vp.sphereon.ssi-lab.nl`)
-      traefik.http.routers.ssi-frontend-insecure.middlewares: redirectToHttps@file,securityHeaders@file
-      traefik.http.routers.ssi-frontend.tls.certresolver: letsencrypt
-      traefik.http.routers.ssi-frontend.tls.options: safeTLSOptions@file
-      traefik.http.routers.ssi-frontend.middlewares: securityHeaders@file
-      traefik.http.routers.ssi-frontend.rule: Host(`vp.sphereon.ssi-lab.nl`)
+      traefik.http.routers.sphereon-frontend-vp-insecure.rule: Host(`vp.sphereon.ssi-lab.nl`)
+      traefik.http.routers.sphereon-frontend-vp-insecure.middlewares: redirectToHttps@file,securityHeaders@file
+      traefik.http.routers.sphereon-frontend-vp.tls.certresolver: letsencrypt
+      traefik.http.routers.sphereon-frontend-vp.tls.options: safeTLSOptions@file
+      traefik.http.routers.sphereon-frontend-vp.middlewares: securityHeaders@file
+      traefik.http.routers.sphereon-frontend-vp.rule: Host(`vp.sphereon.ssi-lab.nl`)
+
+networks:
+  proxy:
+    external: true
